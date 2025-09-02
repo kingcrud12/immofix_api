@@ -40,3 +40,10 @@ coverage/
 
 # Logs PHP / Symfony (si tu en génères hors var/)
 *.log
+# Tests & coverage
+/phpunit.dist.xml
+/coverage/
+/.env.test
+
+# Docker / Compose override
+/compose.override.yaml
