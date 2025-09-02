@@ -43,8 +43,14 @@ class CommentService implements CommentServiceInterface
     }
 
     /** Mise à jour: admin OU auteur du commentaire */
-    public function updateComment(int $id, CommentInput $input, UserInterface $currentUser): Comment
+    public function updateComment(int $id, int $ticketId, CommentInput $input, UserInterface $currentUser): Comment
     {
+        $ticket = $this->tickets->find($ticketId)
+            ?? throw new \RuntimeException('Ticket introuvable');
+
+        $comment = $this->comments->find($id)
+            ?? throw new \RuntimeException('Commentaire introuvable');
+
         $comment = $this->comments->find($id)
             ?? throw new \RuntimeException('Commentaire introuvable');
 
@@ -65,8 +71,12 @@ class CommentService implements CommentServiceInterface
     }
 
     /** Suppression: admin OU auteur du commentaire */
-    public function deleteComment(int $id, UserInterface $currentUser): void
+    public function deleteComment(int $id, int $ticketId, UserInterface $currentUser): void
     {
+
+        $ticket = $this->tickets->find($ticketId)
+            ?? throw new \RuntimeException('Ticket introuvable');
+
         $comment = $this->comments->find($id)
             ?? throw new \RuntimeException('Commentaire introuvable');
 
@@ -82,8 +92,11 @@ class CommentService implements CommentServiceInterface
     }
 
     /** Lecture publique d’un commentaire */
-    public function getComment(int $id): Comment
+    public function getComment(int $id, int $ticketId): Comment
     {
+        $ticket = $this->tickets->find($ticketId)
+            ?? throw new \RuntimeException('Ticket introuvable');
+
         return $this->comments->find($id)
             ?? throw new \RuntimeException('Commentaire introuvable');
     }

@@ -1,6 +1,6 @@
 <?php
 // src/Controller/AuthController.php
-namespace App\Controller;
+namespace App\Controller\Users;
 
 use App\Dto\RegisterDto;
 use App\Entity\User;
@@ -16,12 +16,13 @@ class AuthController extends AbstractController
     #[Route('/api/register', name: 'api_register', methods: ['POST'])]
     public function register(
         #[MapRequestPayload(
-            // par défaut: format json, validation activée
         )] RegisterDto $dto,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $hasher
     ): JsonResponse {
         $user = new User();
+        $user->setFirstname($dto->firstname);
+        $user->setLastname($dto->lastname);
         $user->setEmail($dto->email);
         $user->setRoles(['ROLE_USER']);
         $user->setPassword($hasher->hashPassword($user, $dto->password));
@@ -29,8 +30,10 @@ class AuthController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        // Sérialisation de sortie avec groupes (méthode helper d’AbstractController)
-        return $this->json($user, 201, [], ['groups' => ['user:read']]);
+        return $this->json([
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+        ], 201);
     }
 }
 

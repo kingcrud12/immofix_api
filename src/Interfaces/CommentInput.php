@@ -6,6 +6,4 @@ interface CommentInput
 {
     public function getText(): string;
 
-    public function getTicketId(): ?int;
-
 }

@@ -1,4 +1,3 @@
-# config/packages/nelmio_api_doc.yaml
 nelmio_api_doc:
     documentation:
         openapi: 3.0.0
@@ -13,3 +12,8 @@ nelmio_api_doc:
                     bearerFormat: JWT
         security:
             - Bearer: []
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc)   # inclut uniquement /api sauf /api/doc

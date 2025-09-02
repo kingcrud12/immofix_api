@@ -50,26 +50,28 @@ final class CommentController extends AbstractController
         return $this->json(array_map(fn(Comment $c) => $this->toArray($c), $list));
     }
 
-    #[Route('/comments/{id}', name: 'api_comment_update', methods: ['PATCH'])]
+    #[Route('/{ticketId}/comments/{id}', name: 'api_comment_update', methods: ['PATCH'])]
     public function update(
         int                             $id,
         #[MapRequestPayload] CommentDto $dto,
-        #[CurrentUser] User             $currentUser
+        #[CurrentUser] User             $currentUser,
+        int $ticketId
     ): JsonResponse
     {
         // On ne change que ce qui est présent dans le payload :
         // si tu veux gérer "clé absente vs null explicite", ajoute un mécanisme comme pour les tickets.
-        $c = $this->svc->updateComment($id, $dto, $currentUser);
+        $c = $this->svc->updateComment($id, $ticketId, $dto,  $currentUser);
         return $this->json($this->toArray($c));
     }
 
     #[Route('/comments/{id}', name: 'api_comment_delete', methods: ['DELETE'])]
     public function delete(
         int                 $id,
-        #[CurrentUser] User $currentUser
+        #[CurrentUser] User $currentUser,
+        int $ticketId
     ): JsonResponse
     {
-        $this->svc->deleteComment($id, $currentUser);
+        $this->svc->deleteComment($id,$ticketId, $currentUser);
         return $this->json(null, 204);
     }
 
@@ -81,8 +83,6 @@ final class CommentController extends AbstractController
             'text' => $c->getText(),
             'author' => $c->getAuthor()?->getEmail(),
             'ticket' => $c->getTicketId()?->getId(),
-            // ajoute createdAt/updatedAt si dispo, ex.:
-            // 'createdAt' => $c->getCreatedAt()?->format(DATE_ATOM),
         ];
     }
 }

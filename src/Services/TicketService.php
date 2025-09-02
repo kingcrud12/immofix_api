@@ -54,7 +54,7 @@ final class TicketService implements TicketServiceInterface
     {
         list($ticket, $isAdmin, $isAuthor, $isAssignee) = $this->Verify($id, $currentUser);
 
-        // Si l'utilisateur est l'ASSIGNÉ mais pas admin/author → il ne peut changer QUE le statut
+
         $assigneeRestricted = $isAssignee && !$isAdmin && !$isAuthor;
 
         if (($t = $input->getTitle()) !== null) {
@@ -69,14 +69,12 @@ final class TicketService implements TicketServiceInterface
             if ($assigneeRestricted) throw new \RuntimeException('Seul le statut est modifiable par l’assigné');
             $ticket->setPriority(\App\Enum\TicketPriority::from($p));
         }
-        // assigneeId: réservé admin/auteur
         $assigneeId = $input->getAssigneeId();
         if ($assigneeId !== null || $this->explicitNull($input, 'assigneeId')) {
             if ($assigneeRestricted) throw new \RuntimeException('Réassignation interdite pour l’assigné');
             $ticket->setAssignee($this->resolveAssigneeId($assigneeId));
         }
 
-        // Le statut est modifiable par admin/auteur/assigné
         if (($s = $input->getStatus()) !== null) {
             $ticket->setStatus(\App\Enum\TicketStatus::from($s));
         }

@@ -22,7 +22,6 @@ final class TicketCreateDto implements TicketCreateInput
     #[Assert\Positive]
     public ?int $assigneeId = null;
 
-    // Optionnels : valeurs par défaut appliquées côté service/mapper
     #[Assert\Choice(callback: [self::class, 'statusValues'])]
     public ?string $status = null;
 
@@ -36,7 +35,6 @@ final class TicketCreateDto implements TicketCreateInput
     public function getStatus(): ?string { return $this->status; }
     public function getPriority(): ?string { return $this->priority; }
 
-    // --- Helpers pour la validation
     public static function statusValues(): array
     {
         return array_map(static fn($c) => $c->value, TicketStatus::cases());

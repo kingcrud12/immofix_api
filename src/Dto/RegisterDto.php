@@ -5,6 +5,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterDto
 {
+    #[Assert\Length(min: 2, max: 100)]
+    public ?string $firstname = null;
+
+    #[Assert\Length(min: 2, max: 100)]
+    public ?string $lastname = null;
+
     #[Assert\NotBlank]
     #[Assert\Email]
     public string $email;

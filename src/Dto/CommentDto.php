@@ -10,10 +10,7 @@ class CommentDto implements CommentInput {
     public string $text;
 
 
-    #[Assert\Type('integer')]
-    #[Assert\Positive]
-    public int $ticketId;
 
     public function getText(): string { return $this->text; }
-    public function getTicketId(): int { return $this->ticketId; }
+
 }
