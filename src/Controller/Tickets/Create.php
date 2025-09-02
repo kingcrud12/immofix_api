@@ -8,13 +8,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(name: 'Tickets')]
 #[Route('/api/tickets')]
 final class Create extends AbstractController
 {
-    public function __construct(private readonly TicketServiceInterface $svc)
-    {
-    }
+    public function __construct(private readonly TicketServiceInterface $svc){}
 
     #[Route('', name: 'api_ticket_create', methods: ['POST'])]
     public function create(

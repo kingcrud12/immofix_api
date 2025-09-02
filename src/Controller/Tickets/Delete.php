@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(name: 'Tickets')]
 #[Route('/api/tickets')]
 final class Delete extends AbstractController
 {

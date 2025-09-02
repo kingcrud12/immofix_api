@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(name: 'Comments')]
 #[Route('/api/tickets')]
 final class Update extends AbstractController
 {

@@ -12,6 +12,7 @@ use App\Enum\TicketStatus;
 use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -99,9 +100,12 @@ final class TicketService implements TicketServiceInterface
         $this->em->flush();
     }
 
+    /**
+     * @throws \HttpException
+     */
     public function getTicket(int $id, UserInterface $currentUser): Ticket
     {
-        list($ticket, $isAdmin, $isAuthor, $isAssignee) = $this->Verify($id, $currentUser);
+        [$ticket] = $this->verify($id, $currentUser);
 
         return $ticket;
     }
@@ -173,7 +177,7 @@ final class TicketService implements TicketServiceInterface
         $isAssignee = $ticket->getAssignee()?->getUserIdentifier() === $currentId;
 
         if (!$isAdmin && !$isAuthor && !$isAssignee) {
-            throw new \RuntimeException('Accès refusé');
+            throw new AccessDeniedHttpException('Accès refusé');
         }
         return array($ticket, $isAdmin, $isAuthor, $isAssignee);
     }

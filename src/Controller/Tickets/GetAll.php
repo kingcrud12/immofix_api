@@ -2,18 +2,15 @@
 
 namespace App\Controller\Tickets;
 
-use App\Dto\TicketCreateDto;
-use App\Dto\TicketUpdateDto;
-use App\Entity\Ticket as TicketEntity;
 use App\Entity\User;
 use App\Services\TicketServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(name: 'Tickets')]
 #[Route('/api/tickets')]
 final class GetAll extends AbstractController
 {
