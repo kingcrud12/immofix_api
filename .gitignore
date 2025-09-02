@@ -1,5 +1,7 @@
 
 ###> symfony/framework-bundle ###
+/.env
+/.env.dev
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -22,3 +24,19 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+# macOS & IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Outils divers
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Couverture de tests (si tu l’utilises)
+coverage/
+
+# Logs PHP / Symfony (si tu en génères hors var/)
+*.log
