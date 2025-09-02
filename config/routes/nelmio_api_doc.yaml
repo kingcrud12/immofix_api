@@ -1,0 +1,9 @@
+# UI Swagger (http://127.0.0.1:8000/api/doc)
+nelmio_api_doc_ui:
+    path: /api/doc
+    controller: nelmio_api_doc.controller.swagger_ui
+
+# JSON OpenAPI brut (http://127.0.0.1:8000/api/doc.json)
+nelmio_api_doc_json:
+    path: /api/doc.json
+    controller: nelmio_api_doc.controller.swagger
